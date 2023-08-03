@@ -154,6 +154,8 @@ public class Model extends Observable {
                     if (isMerge) {
                         score += currentTile.value() * 2;
                         haveMergedThisCol = true;
+                    } else {
+                        haveMergedThisCol = false;
                     }
                     changed = true;
                 }
