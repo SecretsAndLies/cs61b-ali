@@ -142,11 +142,12 @@ public class Model extends Observable {
         changed = false;
 
         board.setViewingPerspective(side);
-        for (int col = 0; col < size(); col++) {
+        int size = size();
+        for (int col = 0; col < size; col++) {
             boolean haveMergedThisCol = false;
-            for (int row = size() - 1; row >= 0; row--) {
+            for (int row = size - 2; row >= 0; row--) {
                 Tile currentTile = board.tile(col, row);
-                int howMuchToMoveUp = howMuchToMoveUp(currentTile, haveMergedThisCol);
+                int howMuchToMoveUp = howMuchToMoveUp(currentTile, haveMergedThisCol, col, row);
                 if (howMuchToMoveUp > 0) {
                     int rowToMoveTo = row + howMuchToMoveUp;
                     boolean isMerge = board.move(col, rowToMoveTo, currentTile);
@@ -171,15 +172,13 @@ public class Model extends Observable {
     /**
      * Takes in a cell, and returns how far up that cell should be moved.
      */
-    private int howMuchToMoveUp(Tile originalTile, Boolean haveMergedThisCol) {
+    private int howMuchToMoveUp(Tile originalTile, Boolean haveMergedThisCol, int originalColIndex, int originalRowIndex) {
         int amountToMoveUp = 0;
         // blank values don't move
         if (originalTile == null) {
             return amountToMoveUp;
         }
 
-        int originalRowIndex = originalTile.row();
-        int originalColIndex = originalTile.col();
         int originalVal = originalTile.value();
 
         int tileAboveRowIndex = originalRowIndex + 1;
