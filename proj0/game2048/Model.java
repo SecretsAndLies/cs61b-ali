@@ -7,9 +7,10 @@ import java.util.Observable;
 /**
  * The state of a game of 2048.
  *
- * @author TODO: YOUR NAME HERE
+ * @author ajardine
  */
 public class Model extends Observable {
+
     /**
      * Current contents of the board.
      */
@@ -140,16 +141,68 @@ public class Model extends Observable {
         boolean changed;
         changed = false;
 
-        // TODO: Modify this.board (and perhaps this.score) to account
-        // for the tilt to the Side SIDE. If the board changed, set the
-        // changed local variable to true.
+        board.setViewingPerspective(side);
+        for (int col = 0; col < size(); col++) {
+            boolean haveMergedThisCol = false;
+            for (int row = size() - 1; row >= 0; row--) {
+                Tile currentTile = board.tile(col, row);
+                int howMuchToMoveUp = howMuchToMoveUp(currentTile, haveMergedThisCol);
+                if (howMuchToMoveUp > 0) {
+                    int rowToMoveTo = row + howMuchToMoveUp;
+                    boolean isMerge = board.move(col, rowToMoveTo, currentTile);
+                    if (isMerge) {
+                        score += currentTile.value() * 2;
+                        haveMergedThisCol = true;
+                    }
+                    changed = true;
+                }
+            }
+        }
 
+
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
     }
+
+    /**
+     * Takes in a cell, and returns how far up that cell should be moved.
+     */
+    private int howMuchToMoveUp(Tile originalTile, Boolean haveMergedThisCol) {
+        int amountToMoveUp = 0;
+        // blank values don't move
+        if (originalTile == null) {
+            return amountToMoveUp;
+        }
+
+        int originalRowIndex = originalTile.row();
+        int originalColIndex = originalTile.col();
+        int originalVal = originalTile.value();
+
+        int tileAboveRowIndex = originalRowIndex + 1;
+        while (tileAboveRowIndex < size()) {
+            Tile tileAbove = board.tile(originalColIndex, tileAboveRowIndex);
+
+            if (tileAbove == null) {
+                amountToMoveUp += 1;
+                tileAboveRowIndex += 1;
+                continue;
+            }
+            int tileAboveVal = tileAbove.value();
+
+            if (tileAboveVal == originalVal && !haveMergedThisCol) {
+                return amountToMoveUp + 1;
+            }
+            // Otherwise, result doesn't match this value, or you've already merged so can't merge further.
+            return amountToMoveUp;
+        }
+
+        return amountToMoveUp;
+    }
+
 
     /**
      * Checks if the game is over and sets the gameOver variable
