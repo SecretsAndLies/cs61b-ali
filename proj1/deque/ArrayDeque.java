@@ -175,7 +175,7 @@ public class ArrayDeque<T> {
      * returns null. Must not alter the deque!
      */
     public T get(int index) {
-        int actualIndex = index + firstIndex + 1;
+        int actualIndex = (index + firstIndex + 1) % items.length;
         if (index > size) return null;
         return items[actualIndex];
     }
@@ -196,6 +196,16 @@ public class ArrayDeque<T> {
         int j = L.get(0);
         L.addFirst(2);
         int k = L.get(0);
+        L.addFirst(3);
+        int a = L.get(0);
+        L.addFirst(4);
+        int s = L.get(0);
+        L.addFirst(5);
+        int d = L.get(0);
+        L.addFirst(6);
+        int f = L.get(0);
+        L.addFirst(7);
+        int z = L.get(0);
 
     }
 }
