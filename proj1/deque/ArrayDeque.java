@@ -175,8 +175,9 @@ public class ArrayDeque<T> {
      * returns null. Must not alter the deque!
      */
     public T get(int index) {
+        int actualIndex = index + firstIndex + 1;
         if (index > size) return null;
-        return items[index];
+        return items[actualIndex];
     }
 
     /*
@@ -187,70 +188,14 @@ public class ArrayDeque<T> {
     }
 
     public static void main(String[] args) {
+
         ArrayDeque<Integer> L = new ArrayDeque<>();
-        L.addFirst(4);
-        L.addLast(5);
-        L.addFirst(3);
-        L.addLast(6);
-        L.addLast(7);
-        L.addLast(8);
-        L.addLast(9);
-        L.addFirst(2);
-        L.addFirst(1);
         L.addFirst(0);
-        L.addFirst(-1);
-        L.addFirst(-2);
-        L.addFirst(-3);
-        L.addFirst(-4);
-        L.addFirst(-5);
-
-        L.addFirst(-6);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.addFirst(-7);
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-        L.removeFirst();
-
-        L.printDeque();
-
+        int i = L.get(0);
+        L.addFirst(1);
+        int j = L.get(0);
+        L.addFirst(2);
+        int k = L.get(0);
 
     }
 }
