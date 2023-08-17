@@ -45,18 +45,29 @@ public class ADequeTest {
     @Test
     public void testEqualsLots() {
         ArrayDeque<Integer> B = new ArrayDeque<>();
-        ArrayDeque<Integer> Other = new ArrayDeque<>();
+        ArrayDeque<Integer> other = new ArrayDeque<>();
 
 
         for (int i = 0; i < 100; i++) {
             int randVal = StdRandom.uniform(0, 100);
             B.addFirst(randVal);
-            Other.addLast(99);
+            other.addLast(99);
 
         }
-        assertFalse(B.equals(Other));
+        assertFalse(B.equals(other));
     }
 
+    @Test
+    public void testEqualsWithStrings() {
+        ArrayDeque<String> B = new ArrayDeque<>();
+        ArrayDeque<String> other = new ArrayDeque<>();
+        B.addLast("test");
+        other.addFirst("test");
+        assertTrue(B.equals(other));
+        other.addFirst("test2");
+        assertFalse(B.equals(other));
+
+    }
 
     @Test
     public void randomizedTest() {
@@ -109,11 +120,6 @@ public class ADequeTest {
                 assertEquals(L.isEmpty(), B.isEmpty());
 
             }
-//            else if (operationNumber == 7) {
-//                // isEmpty
-//                int randVal = StdRandom.uniform(0, 100);
-//                assertEquals(L.contains(randVal), B.contains(randVal));
-//            }
 
 
         }
