@@ -35,6 +35,28 @@ public class ADequeTest {
 
     }
 
+    @Test
+    public void testEqualsEmpty() {
+        ArrayDeque<Integer> B = new ArrayDeque<>();
+        ArrayDeque<Integer> L = new ArrayDeque<>();
+        assertTrue(B.equals(L));
+    }
+
+    @Test
+    public void testEqualsLots() {
+        ArrayDeque<Integer> B = new ArrayDeque<>();
+        ArrayDeque<Integer> Other = new ArrayDeque<>();
+
+
+        for (int i = 0; i < 100; i++) {
+            int randVal = StdRandom.uniform(0, 100);
+            B.addFirst(randVal);
+            Other.addLast(99);
+
+        }
+        assertFalse(B.equals(Other));
+    }
+
 
     @Test
     public void randomizedTest() {
@@ -43,7 +65,7 @@ public class ADequeTest {
 
         int N = 5000;
         for (int i = 0; i < N; i += 1) {
-            int operationNumber = StdRandom.uniform(0, 8);
+            int operationNumber = StdRandom.uniform(0, 7);
             if (operationNumber == 0) {
                 // addLast
                 int randVal = StdRandom.uniform(0, 100);
@@ -86,11 +108,12 @@ public class ADequeTest {
                 // isEmpty
                 assertEquals(L.isEmpty(), B.isEmpty());
 
-            } else if (operationNumber == 7) {
-                // isEmpty
-                int randVal = StdRandom.uniform(0, 100);
-                assertEquals(L.contains(randVal), B.contains(randVal));
             }
+//            else if (operationNumber == 7) {
+//                // isEmpty
+//                int randVal = StdRandom.uniform(0, 100);
+//                assertEquals(L.contains(randVal), B.contains(randVal));
+//            }
 
 
         }

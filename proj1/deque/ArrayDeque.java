@@ -103,7 +103,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     public void printDeque() {
         int start = resetIndex(firstIndex + 1);
         for (int i = 0; i < size; i++) {
-            int itemIndex = (start + i) % items.length; // getting the length remainder ensures we don’t go out of bounds.
+            int itemIndex = (start + i) % items.length;
+            // getting the length remainder ensures we don’t go out of bounds.
             System.out.print(items[itemIndex] + " ");
         }
         System.out.println();
@@ -115,7 +116,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
      */
     @Override
     public T removeFirst() {
-        if (size == 0) return null;
+        if (size == 0) {
+            return null;
+        }
 
         int firstItemIndex = resetIndex(firstIndex + 1);
 
@@ -153,7 +156,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
      */
     @Override
     public T removeLast() {
-        if (size == 0) return null;
+        if (size == 0) {
+            return null;
+        }
         int lastItemIndex = resetIndex(lastIndex - 1);
 
         T returnItem = items[lastItemIndex];
@@ -177,20 +182,21 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     @Override
     public T get(int index) {
         int actualIndex = (index + firstIndex + 1) % items.length;
-        if (index > size) return null;
+        if (index > size) {
+            return null;
+        }
         return items[actualIndex];
     }
 
     public Iterator<T> iterator() {
         return new ArrayIterator();
-
     }
 
     private class ArrayIterator implements Iterator<T> {
         private int pos;
         private int i;
 
-        public ArrayIterator() {
+        ArrayIterator() {
             pos = (firstIndex + 1) % items.length;
             i = 0;
         }
@@ -209,7 +215,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         }
     }
 
-    public boolean contains(T i) {
+    private boolean contains(T i) {
         for (T v : this) {
             if (v == i) return true;
         }
@@ -217,7 +223,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     }
 
     public boolean equals(Object o) {
-        if (o == null) return false;
+        if (o == null) {
+            return false;
+        }
         if (this == o) {
             return true;
         } // optimization
@@ -229,8 +237,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if (this.size() != other.size()) {
             return false;
         }
-        for (T item : this) {
-            if (!other.contains(item)) {
+        for (int i = 0; i < size; i++) {
+            if (this.get(i) != other.get(i)) {
                 return false;
             }
         }
@@ -244,14 +252,5 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         return size == items.length;
     }
 
-    public static void main(String[] args) {
-        ArrayDeque<Integer> L = new ArrayDeque<>();
-        for (int i = 0; i < 1; i++) {
-            L.addLast(i);
-        }
-        for (int i : L) {
-            L.removeLast();
-        }
-//        System.out.println(L.contains(101));
-    }
+
 }
