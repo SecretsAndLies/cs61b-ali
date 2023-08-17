@@ -35,14 +35,15 @@ public class ADequeTest {
 
     }
 
+
     @Test
     public void randomizedTest() {
         LinkedList<Integer> L = new LinkedList<>();
         ArrayDeque<Integer> B = new ArrayDeque<>();
 
-        int N = 50;
+        int N = 5000;
         for (int i = 0; i < N; i += 1) {
-            int operationNumber = StdRandom.uniform(0, 4);
+            int operationNumber = StdRandom.uniform(0, 7);
             if (operationNumber == 0) {
                 // addLast
                 int randVal = StdRandom.uniform(0, 100);
@@ -53,7 +54,7 @@ public class ADequeTest {
                 int size = L.size();
                 assertEquals(size, B.size());
             } else if (operationNumber == 2) {
-                // getFirst
+                // get(0)
                 int size = L.size();
                 if (size > 0) {
                     Integer lLast = L.get(0);
@@ -64,10 +65,26 @@ public class ADequeTest {
                 // removeLast
                 int size = L.size();
                 if (size > 0) {
-                    int lLast = L.removeLast();
-                    int bLast = B.removeLast();
+                    Integer lLast = L.removeLast();
+                    Integer bLast = B.removeLast();
                     assertEquals(lLast, bLast);
                 }
+            } else if (operationNumber == 4) {
+                // addFirst
+                int randVal = StdRandom.uniform(0, 100);
+                L.addFirst(randVal);
+                B.addFirst(randVal);
+            } else if (operationNumber == 5) {
+                // removeFirst
+                int size = L.size();
+                if (size > 0) {
+                    Integer lLast = L.removeFirst();
+                    Integer bLast = B.removeFirst();
+                    assertEquals(lLast, bLast);
+                }
+            } else if (operationNumber == 6) {
+                // isEmpty
+                assertEquals(L.isEmpty(), B.isEmpty());
             }
 
 

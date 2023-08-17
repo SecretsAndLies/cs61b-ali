@@ -1,13 +1,8 @@
 package deque;
 
-// TODO: still needs the following methods:
-/*
-public Iterator<T> iterator(): The Deque objects we’ll make are iterable (i.e. Iterable<T>)
-so we must provide this method to return an iterator.
-*/
+import java.util.Iterator;
 
-
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Iterable<T> {
     private class Node {
         public T item;
         public Node next;
@@ -114,6 +109,15 @@ public class LinkedListDeque<T> {
         return current.item;
     }
 
+    public boolean contains(T x) {
+        for (T i : this) {
+            if (i == x) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /*Removes and returns the item at the back of the deque. If no such item exists, returns null.
      */
     public T removeLast() {
@@ -140,28 +144,64 @@ public class LinkedListDeque<T> {
         return currentNode.item;
     }
 
+    public Iterator<T> iterator() {
+        return new LLIterator();
+    }
+
+    private class LLIterator implements Iterator<T> {
+        private Node currentNode;
+
+        public LLIterator() {
+            currentNode = sentinel.next;
+        }
+
+        public boolean hasNext() {
+            return currentNode != sentinel;
+
+        }
+
+        public T next() {
+
+            T returnItem = currentNode.item;
+            currentNode = currentNode.next;
+            return returnItem;
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (this == o) {
+            return true;
+        } // optimization
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        LinkedListDeque<T> other = (LinkedListDeque<T>) o;
+        if (this.size() != other.size()) {
+            return false;
+        }
+        for (T item : this) {
+            if (!other.contains(item)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
         LinkedListDeque<Integer> L = new LinkedListDeque<>();
-        Boolean t = L.isEmpty();
-        L.addFirst(12);
-        Boolean j = L.isEmpty();
-        L.addFirst(13);
-        Boolean a = L.isEmpty();
 
         L.addFirst(14);
         L.addLast(15);
         L.addLast(16);
         L.addLast(17);
 
-        L.removeFirst();
-        L.removeLast();
-        L.removeFirst();
-        L.removeLast();
-        L.removeFirst();
-        L.removeLast();
-        L.removeFirst();
-        L.removeFirst();
 
+        for (int i : L) {
+            System.out.println(i);
+        }
     }
 }

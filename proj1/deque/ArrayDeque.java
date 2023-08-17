@@ -1,6 +1,8 @@
 package deque;
 
-public class ArrayDeque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Iterable<T> {
 
     private int size;
     private T[] items;
@@ -180,6 +182,62 @@ public class ArrayDeque<T> {
         return items[actualIndex];
     }
 
+    public Iterator<T> iterator() {
+        return new ArrayIterator();
+
+    }
+
+    private class ArrayIterator implements Iterator<T> {
+        private int pos;
+        private int i;
+
+        public ArrayIterator() {
+            pos = (firstIndex + 1) % items.length;
+            i = 0;
+        }
+
+        public boolean hasNext() {
+            return i < size;
+
+        }
+
+        public T next() {
+            pos = (firstIndex + 1 + i) % items.length;
+            T returnItem = items[pos];
+            pos++;
+            i++;
+            return returnItem;
+        }
+    }
+
+    public boolean contains(T i) {
+        for (T v : this) {
+            if (v == i) return true;
+        }
+        return false;
+    }
+
+    public boolean equals(Object o) {
+        if (o == null) return false;
+        if (this == o) {
+            return true;
+        } // optimization
+
+        if (this.getClass() != o.getClass()) {
+            return false;
+        }
+        ArrayDeque<T> other = (ArrayDeque<T>) o;
+        if (this.size() != other.size()) {
+            return false;
+        }
+        for (T item : this) {
+            if (!other.contains(item)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /*
         returns if the array is full.
     */
@@ -188,24 +246,13 @@ public class ArrayDeque<T> {
     }
 
     public static void main(String[] args) {
-
         ArrayDeque<Integer> L = new ArrayDeque<>();
-        L.addFirst(0);
-        int i = L.get(0);
-        L.addFirst(1);
-        int j = L.get(0);
-        L.addFirst(2);
-        int k = L.get(0);
-        L.addFirst(3);
-        int a = L.get(0);
-        L.addFirst(4);
-        int s = L.get(0);
-        L.addFirst(5);
-        int d = L.get(0);
-        L.addFirst(6);
-        int f = L.get(0);
-        L.addFirst(7);
-        int z = L.get(0);
-
+        for (int i = 0; i < 100; i++) {
+            L.addLast(i);
+        }
+        for (int i : L) {
+            System.out.println(i);
+        }
+        System.out.println(L.contains(101));
     }
 }
