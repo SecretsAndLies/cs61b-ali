@@ -60,7 +60,7 @@ public class ADequeTest {
     @Test
     public void testEqualsWithStrings() {
         ArrayDeque<String> B = new ArrayDeque<>();
-        ArrayDeque<String> other = new ArrayDeque<>();
+        LinkedListDeque<String> other = new LinkedListDeque<>();
         B.addLast("test");
         other.addFirst("test");
         assertTrue(B.equals(other));
