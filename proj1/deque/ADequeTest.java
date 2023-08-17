@@ -43,7 +43,7 @@ public class ADequeTest {
 
         int N = 5000;
         for (int i = 0; i < N; i += 1) {
-            int operationNumber = StdRandom.uniform(0, 7);
+            int operationNumber = StdRandom.uniform(0, 8);
             if (operationNumber == 0) {
                 // addLast
                 int randVal = StdRandom.uniform(0, 100);
@@ -85,6 +85,11 @@ public class ADequeTest {
             } else if (operationNumber == 6) {
                 // isEmpty
                 assertEquals(L.isEmpty(), B.isEmpty());
+
+            } else if (operationNumber == 7) {
+                // isEmpty
+                int randVal = StdRandom.uniform(0, 100);
+                assertEquals(L.contains(randVal), B.contains(randVal));
             }
 
 
